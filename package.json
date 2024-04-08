@@ -1,0 +1,18 @@
+{
+    "type": "module",
+    "name": "it122webserver",
+    "version": "1.0.0",
+    "description": "A simple Node.js web server application.",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/RyanOliver0/it122"
+    },
+    "author": "Ryan Oliver",
+    "license": "ISC"
+  }
+  
+  
