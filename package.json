@@ -5,14 +5,16 @@
     "description": "A simple Node.js web server application.",
     "main": "index.js",
     "scripts": {
-      "start": "node index.js"
+        "start": "node index.js"
     },
     "repository": {
-      "type": "git",
-      "url": "https://github.com/RyanOliver0/it122"
+        "type": "git",
+        "url": "https://github.com/RyanOliver0/it122"
     },
     "author": "Ryan Oliver",
-    "license": "ISC"
-  }
-  
-  
+    "license": "ISC",
+    "dependencies": {
+        "ejs": "^3.1.10",
+        "express": "^4.19.2"
+    }
+}

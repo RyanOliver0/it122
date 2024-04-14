@@ -1,24 +1,25 @@
-import http from 'http';
+// index.js
+import express from 'express';
+import { getAll, getItem } from './data.js';
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const app = express();
+const PORT = 3000;
 
-const server = http.createServer((req, res) => {
-  if(req.url === '/') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Welcome to the homepage!');
-  } else if(req.url === '/about') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('This is a little information about myself.');
-  } else {
-    res.statusCode = 404;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('404 Not Found');
-  }
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    const items = getAll();
+    res.render('home', { items });
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.get('/detail', (req, res) => {
+    const itemId = req.query.id;
+    const item = getItem(itemId);
+    res.render('detail', { item });
 });
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
