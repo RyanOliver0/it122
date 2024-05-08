@@ -1,16 +1,16 @@
 // data.js
 const items = [
-    { id: 1, name: 'Car', brand: 'Tesla', price: 80000, color: 'black' },
-    { id: 2, name: 'Guitar', brand: 'Fender', price: 1500, type: 'electric' },
-    { id: 3, name: 'Phone', brand: 'Samsung', price: 1000, color: 'blue' },
-    { id: 4, name: 'Computer', brand: 'Apple', price: 2000, screenSize: '15 inches' },
-    { id: 5, name: 'Shoe', brand: 'Nike', price: 120, color: 'white' }
+    { shoe: 1, brand: 'Nike', price: 100, color: 'blue', size: '10' },
+    { shoe: 2, brand: 'Puma', price: 120, color: 'white', size: '11' },
+    { shoe: 3, brand: 'New Balance', price: 130, color: 'grey', size: '12' },
+    { shoe: 4, brand: 'Adidas', price: 140, color: 'black', size: '13'}, 
+    { shoe: 5, brand: 'Vans', price: 150, color: 'green', size: '14' }
 ];
 
 export function getAll() {
     return items;
 }
 
-export function getItem(key) {
-    return items.find(item => item.id === key);
+export function getItem(shoe) {
+    return items.find(item => item.shoe === parseInt(shoe));
 }
