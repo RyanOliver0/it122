@@ -1,21 +1,34 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
 dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rearloliver:Bandaid92@it122.o5zjsqa.mongodb.net/?retryWrites=true&w=majority&appName=it122';
+// Get the connection string from environment variables
+const connectionString = process.env.MONGO_URI;
 
-mongoose.connect(MONGODB_URI, {
+// Check if the connection string is correctly loaded
+if (!connectionString) {
+  console.error('MONGO_URI not found in .env file');
+  process.exit(1); // Exit the application with an error code
+}
+
+// Connect to MongoDB using the connection string
+mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(error => console.error('Error connecting to MongoDB:', error.message));
+});
 
-mongoose.connection.on('connected', () => console.log('MongoDB connected!'));
-mongoose.connection.on('error', err => console.error(`MongoDB connection error: ${err}`));
-mongoose.connection.on('disconnected', () => console.log('MongoDB disconnected'));
+// Event listeners for Mongoose connection
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to the database');
+});
 
-export default mongoose;
+mongoose.connection.on('error', (err) => {
+  console.log('Mongoose connection error:', err);
+});
 
-
-
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
+});
+console.log('MongoDB Connection String:', connectionString);

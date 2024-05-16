@@ -1,40 +1,38 @@
 import express from 'express';
-import { getAll, getItem } from './data.js';
+import { Shoe } from './models/data.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import './db.js';
 
-// Define __dirname in ES module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Initialize Express app
 const app = express();
 
-// Set the view engine to EJS
 app.set('view engine', 'ejs');
-
-// Set views directory to the 'views' folder
 app.set('views', path.join(__dirname, 'views'));
-
-// Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-// Define the root route to render the home page with items
-app.get('/', (req, res) => {
-  res.render('home', { items: getAll() });
+app.get('/', (req, res, next) => {
+  Shoe.find({}).lean()
+    .then(items => {
+      res.render('home', { items });
+    })
+    .catch(err => next(err));
 });
 
-// Define the detail route to render details of a specific item
-app.get('/detail', (req, res) => {
-  const item = getItem(req.query.id);
-  if (item) {
-    res.render('detail', { item });
-  } else {
-    res.send('Item not found');
-  }
+app.get('/detail', (req, res, next) => {
+  Shoe.findOne({ id: req.query.id }).lean()
+    .then(item => {
+      if (item) {
+        res.render('detail', { item });
+      } else {
+        res.send('Item not found');
+      }
+    })
+    .catch(err => next(err));
 });
 
-// Start the server and listen on port 3000
 app.listen(3000, () => console.log('Server running on port 3000'));
+
 
 
 

@@ -14,10 +14,11 @@
   "author": "Ryan Oliver",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "mongodb": "^6.5.0",
-    "mongoose": "^8.3.4"
+    "mongoose": "^8.3.5"
   },
   "bugs": {
     "url": "https://github.com/RyanOliver0/it122/issues"
