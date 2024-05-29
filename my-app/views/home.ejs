@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home Page</title>
-  <link rel="stylesheet" href="/styles.css">
   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -14,28 +13,29 @@
   <script type="text/babel">
     const items = <%- items %>;
 
-    const ItemList = ({ items }) => {
-      return (
-        <ul>
-          {items.map(item => (
-            <li key={item.id}>
-              <a href={`/detail?id=${item.id}`}>{item.name}</a>
-            </li>
-          ))}
-        </ul>
-      );
-    };
+    const Item = ({ item }) => (
+      <li>
+        <a href={`/detail?id=${item.id}`}>{item.name}</a>
+      </li>
+    );
 
-    const App = () => {
-      return (
-        <div>
-          <h1>Items List</h1>
-          <ItemList items={items} />
-        </div>
-      );
-    };
+    const ItemList = ({ items }) => (
+      <ul>
+        {items.map(item => (
+          <Item key={item.id} item={item} />
+        ))}
+      </ul>
+    );
+
+    const App = () => (
+      <div>
+        <h1>Items List</h1>
+        <ItemList items={items} />
+      </div>
+    );
 
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
 </html>
+
