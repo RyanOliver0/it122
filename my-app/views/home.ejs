@@ -11,31 +11,104 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
+    // Define your React components here
     const items = <%- items %>;
 
-    const Item = ({ item }) => (
-      <li>
-        <a href={`/detail?id=${item.id}`}>{item.name}</a>
-      </li>
-    );
-
-    const ItemList = ({ items }) => (
+    const ItemList = ({ items, onItemClick }) => (
       <ul>
-        {items.map(item => (
-          <Item key={item.id} item={item} />
+        {items.map((item) => (
+          <li key={item.id} onClick={() => onItemClick(item)}>
+            <a href="#">{item.name}</a>
+          </li>
         ))}
       </ul>
     );
 
+    const Detail = ({ item }) => {
+      const [formData, setFormData] = React.useState({ ...item });
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      };
+
+      const handleClear = () => {
+        setFormData({ ...item });
+      };
+
+      return (
+        <div>
+          <h2>Item Details</h2>
+          <form>
+            <div>
+              <label>Name:</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label>Price:</label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label>Color:</label>
+              <input
+                type="text"
+                name="color"
+                value={formData.color}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label>Size:</label>
+              <input
+                type="text"
+                name="size"
+                value={formData.size}
+                onChange={handleChange}
+              />
+            </div>
+            <button type="button" onClick={handleClear}>Clear</button>
+          </form>
+        </div>
+      );
+    };
+
+    const Home = ({ initialItems }) => {
+      const [items, setItems] = React.useState(initialItems);
+      const [selectedItem, setSelectedItem] = React.useState(null);
+
+      const handleItemClick = (item) => {
+        setSelectedItem(item);
+      };
+
+      return (
+        <div>
+          <h1>Items List</h1>
+          <ItemList items={items} onItemClick={handleItemClick} />
+          {selectedItem && <Detail item={selectedItem} />}
+        </div>
+      );
+    };
+
     const App = () => (
-      <div>
-        <h1>Items List</h1>
-        <ItemList items={items} />
-      </div>
+      <Home initialItems={items} />
     );
 
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
 </html>
+
 
